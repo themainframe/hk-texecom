@@ -1,0 +1,25 @@
+{
+  "name": "texecom-homekit",
+  "version": "0.1.0",
+  "description": "A bridge between Texecom Premier Elite security systems and Apple HomeKit via HAP-NodeJS",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "./node_modules/ts-node/dist/bin.js src/index.ts"
+  },
+  "author": "Damien Walsh <me@damow.net>",
+  "license": "MIT",
+  "dependencies": {
+    "bunyan": "^1.8.12",
+    "hap-nodejs": "0.4.53",
+    "rxjs": "^6.5.2",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.2.2",
+    "yaml": "^1.0.3"
+  },
+  "devDependencies": {
+    "@types/bunyan": "^1.8.5",
+    "@types/node": "^10.12.12",
+    "@types/yaml": "^1.0.1",
+    "@types/yamljs": "^0.2.30"
+  }
+}

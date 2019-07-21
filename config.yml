@@ -1,0 +1,15 @@
+
+panel:
+
+  # Connectivity
+  connection:
+    host: 10.10.0.27
+    port: 10001
+    protocol: crestron
+
+  # Zones which should be mapped into HomeKit accessories
+  zones:
+    
+    1:
+      name: Front Door
+      type: contact
