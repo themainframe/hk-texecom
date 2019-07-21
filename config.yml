@@ -1,4 +1,29 @@
+# HomeKit settings
+homekit:
 
+  # The HomeKit accessory port on which allocations will start
+  # Each accessory will use a port sequentially from this number.
+  hap_start_port: 51826
+
+  # The HomeKit UUID
+  # If you're running multiple instances of texecom-homekit, use a unique UUID for each
+  uuid: themainframe:accessories:texecom-homekit
+
+  # A nice name for the device in HomeKit
+  name: Security Alarm
+
+  # The manufacturer string to use
+  manufacturer: Walsh Industries
+
+  # Make & Model
+  model: Rev-1
+  serial: T3XE-H0MEK1T
+
+  # The unique username and pincode for the HomeKit device
+  username: DE:AD:BE:EF:00:01
+  pincode: 031-45-191
+
+# Premier Elite Panel config
 panel:
 
   # Connectivity
@@ -13,3 +38,11 @@ panel:
     1:
       name: Front Door
       type: contact
+    
+    9:
+      name: Hallway
+      type: motion
+    
+    10:
+      name: Landing
+      type: motion
