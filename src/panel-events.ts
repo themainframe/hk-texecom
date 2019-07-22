@@ -2,9 +2,9 @@
  * The state of a zone on a Premier Elite panel.
  */
 export enum ZoneState {
-    Secure = 1,
-    Active = 2,
-    Tamper = 3
+    Secure = 0,
+    Active = 1,
+    Tamper = 2
 }
 
 /**
