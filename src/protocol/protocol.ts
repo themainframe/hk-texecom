@@ -1,5 +1,6 @@
 import { Subject } from "rxjs";
-import { PanelEvent } from "../panel-events";
+import { PanelEvent } from "../panel/panel-events";
+import { PanelCommand } from '../panel/panel-commands';
 
 /**
  * Defines an interface for a comms protocol supported by the Premier Elite panel.
@@ -12,6 +13,6 @@ export interface ProtocolInterface {
     /**
      * Connect & Disconnect.
      */
-    connect(): Subject<PanelEvent>;
+    connect(commandSubject: Subject<PanelCommand>): Subject<PanelEvent>;
     disconnect(): void;
 }

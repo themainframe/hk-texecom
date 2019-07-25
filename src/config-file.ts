@@ -30,15 +30,27 @@ export interface ZoneConfig {
 }
 
 /**
+ * Configuration for a single area.
+ */
+export interface AreaConfig {
+    name: string
+}
+
+/**
  * Panel configuration.
  */
 export interface PanelConfig {
 
     connection: ConnectionConfig,
+    code: string,
 
     // Zones to map
     zones: {
         [key: number]: ZoneConfig
+    },
+
+    areas?: {
+        [key: number]: AreaConfig
     }
 
 }

@@ -2,7 +2,8 @@ import { Subject } from 'rxjs';
 import { PanelConfig } from "./config-file";
 import { ProtocolInterface } from "./protocol/protocol";
 import { CrestronProtocol } from "./protocol/crestron";
-import { PanelEvent } from './panel-events';
+import { PanelEvent } from './panel/panel-events';
+import { PanelCommand } from './panel/panel-commands';
 
 const protocols = {
     crestron: CrestronProtocol
@@ -15,6 +16,8 @@ export class Panel {
 
     private protocol: ProtocolInterface;
 
+    private commandSubject: Subject<PanelCommand>;
+
     constructor (private config: PanelConfig) {
 
         // Create protocol based on configuration
@@ -23,6 +26,17 @@ export class Panel {
         }
 
         this.protocol = new protocols[config.connection.protocol](config.connection);
+
+        // Create a subject to which commands can be published
+        this.commandSubject = new Subject<PanelCommand>();
+    }
+
+    /**
+     * Send a command to this panel.
+     * @param command 
+     */
+    public sendCommand(command: PanelCommand) {
+        this.commandSubject.next(command);
     }
 
     /**
@@ -30,9 +44,12 @@ export class Panel {
      */
     public startObservation() : Subject<PanelEvent> {
         console.info(`Starting observation of panel events on ${this.config.connection.host}...`)
-        return this.protocol.connect();
+        return this.protocol.connect(this.commandSubject);
     }
 
+    /**
+     * Stop observing panel events.
+     */
     public stopObservation() {
         console.info(`Stopping observation of panel events on ${this.config.connection.host}...`)
         this.protocol.disconnect();

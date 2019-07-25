@@ -28,7 +28,7 @@ export class PanelEvent {
  * An event indicating that an area changed state.
  */
 export class AreaStateChangeEvent extends PanelEvent {
-    constructor (public area: number, public newState: AreaState, public byUser: number) {
+    constructor (public area: number, public newState: AreaState, public byUser?: number) {
         super();
     }
 }
@@ -67,3 +67,4 @@ export class UserLoginEvent extends UserEvent {
         super(user);
     }
 }
+

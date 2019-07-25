@@ -2,8 +2,9 @@ import * as fs from 'fs';
 import * as net from 'net';
 import { ProtocolInterface } from './protocol';
 import { ConnectionConfig } from '../config-file';
-import { Subject } from 'rxjs';
-import { PanelEvent, ZoneStateChangeEvent, AreaStateChangeEvent, AreaState, UserLoginEvent, UserLoginMechanism } from '../panel-events';
+import { Subject, Subscription } from 'rxjs';
+import { PanelEvent, ZoneStateChangeEvent, AreaStateChangeEvent, AreaState, UserLoginEvent, UserLoginMechanism } from '../panel/panel-events';
+import { PanelCommand } from '../panel/panel-commands';
 
 /**
  * Driver for receiving panel events via Crestron protocol over the network.
@@ -11,15 +12,22 @@ import { PanelEvent, ZoneStateChangeEvent, AreaStateChangeEvent, AreaState, User
 export class CrestronProtocol implements ProtocolInterface {
 
     private client: net.Socket;
+    
+    private commandSubscriber: Subscription;
+
     public panelObservable: Subject<PanelEvent>;
+
 
     constructor (private config: ConnectionConfig) {}
 
     /**
      * Connect and start listening for events
      */
-    public connect() : Subject<PanelEvent> {
+    public connect(commandSubject: Subject<PanelCommand>) : Subject<PanelEvent> {
+
         this.panelObservable = new Subject<PanelEvent>();
+
+        // Connect to the panel via TCP
         this.client = new net.Socket();
         this.client.connect({
             host: this.config.host,
@@ -28,6 +36,10 @@ export class CrestronProtocol implements ProtocolInterface {
         this.client.on('data', (data: Buffer) => {
             this.onData(data);
         });
+
+        // TODO: Observe commandSubject and react to commands issued
+        // TODO: This might end up being only used for other protocols (I.e. Connect)
+
         return this.panelObservable;
     }
 
@@ -35,6 +47,7 @@ export class CrestronProtocol implements ProtocolInterface {
      * Disconnect.
      */
     public disconnect() {
+        this.commandSubscriber.unsubscribe();
         this.client.end();
     }
 
