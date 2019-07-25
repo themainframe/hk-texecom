@@ -1,0 +1,56 @@
+# HomeKit settings
+homekit:
+
+  # The HomeKit accessory port on which allocations will start
+  # Each accessory will use a port sequentially from this number.
+  hap_start_port: 51826
+
+  # The HomeKit UUID
+  # If you're running multiple instances of texecom-homekit, use a unique UUID for each
+  uuid: themainframe:accessories:texecom-homekit
+
+  # A nice name for the device in HomeKit
+  name: Texecom Premier Elite
+
+  # The manufacturer string to use
+  manufacturer: Damo Industries
+
+  # Make & Model
+  model: Rev-1
+  serial: T3XE-H0MEK1T
+
+  # The unique username and pincode for the HomeKit device
+  # Change this to something unique before use
+  username: DE:AD:BE:EF:00:01
+  pincode: 031-45-191
+
+# Premier Elite Panel config
+panel:
+  
+  # User Code
+  code: 5678
+
+  # Connectivity
+  connection:
+
+    # Hostname and port of your Com-WiFi or ComIP (or other UART bridge)
+    host: 10.10.0.27
+    port: 10001
+
+    # Only 'crestron' is supported right now
+    protocol: crestron
+
+  # Areas which should be mapped into HomeKit security alarm accessories
+  # Not currently supported, see README.md
+  areas: ~
+
+  # Zones which should be mapped into HomeKit sensor accessories
+  zones:
+    
+    # The zone number should be the key
+    1:
+      # The name doesn't have to match the name on your panel, it's just for HomeKit use
+      name: Front Door
+      # 'contact' and 'motion' are supported - again purely for HomeKit aesthetics
+      type: contact
+    

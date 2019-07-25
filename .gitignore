@@ -1,8 +1,6 @@
 node_modules
 tmp
 **/*.js
-!src/gui/static/*.js
 **/*.js.map
-*.jpg
-*.png
-store
+persist/
+config.yml
