@@ -1,0 +1,5 @@
+{
+  "uid": "texecom-homekit",
+  "append": true,
+  "script": "index.js"
+}
