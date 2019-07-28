@@ -1,5 +1,5 @@
 {
-  "name": "texecom-homekit",
+  "name": "hk-texecom",
   "version": "0.1.0",
   "description": "A bridge between Texecom Premier Elite security systems and Apple HomeKit via HAP-NodeJS",
   "main": "src/index.js",

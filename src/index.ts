@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * texecom-homekit
+ * hk-texecom
  * Main file.
  */
 

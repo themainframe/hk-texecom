@@ -1,12 +1,12 @@
-# `texecom-homekit`
+# `hk-texecom`
 
 *A bridge between Texecom Premier Elite security systems and Apple HomeKit via HAP-NodeJS*
 
-![texecom-homekit](https://s3-eu-west-1.amazonaws.com/assets-misc.damow.net/texecom-homekit-demo.jpg)
+![hk-texecom](https://s3-eu-west-1.amazonaws.com/assets-misc.damow.net/texecom-homekit-demo.jpg)
 
 ## Preface
 
-`texecom-homekit` lets you map zones on your [Texecom](https://texe.com/uk/) Premier Elite panel as sensor-type devices in [HomeKit](https://www.apple.com/uk/ios/home/). The main advantage to this is the ability to create HomeKit automations based on zones going active/secure.
+`hk-texecom` lets you map zones on your [Texecom](https://texe.com/uk/) Premier Elite panel as sensor-type devices in [HomeKit](https://www.apple.com/uk/ios/home/). The main advantage to this is the ability to create HomeKit automations based on zones going active/secure.
 
 _In future, you'll also be able to map the panel's set/unset functionality as a HomeKit Security System device, letting you set and unset by asking Siri!_
 
@@ -24,8 +24,8 @@ To use it, you'll require a Texecom Premier Elite security system with an [appro
 * Ensure you have a recent (`>8.0)`) version of Node. Recommend obtaining that either using your package manger or as a download from the NodeJS website - [https://nodejs.org/en/download/](https://nodejs.org/en/download/).
 * Install the dependencies with `yarn install` or `npm install` (prefer `yarn`!)
 
-_Optionally_, if you want to set up `texecom-homekit` as a long-running process that will restart if it dies:
+_Optionally_, if you want to set up `hk-texecom` as a long-running process that will restart if it dies:
 
 * Install `forever` with `sudo npm install -g forever`
 * Add this line to the desired user's `crontab`: `@reboot NODE_ENV=prod PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin /usr/local/bin/forever start {PATH_TO_TEXECOM_HOMEKIT}/forever.json > /dev/null 2>&1` - **remembering** to replace `{PATH_TO_TEXECOM_HOMEKIT}` with the relevant path to the project.
-* Check `texecom-homekit` has started with `forever list`.
+* Check `hk-texecom` has started with `forever list`.

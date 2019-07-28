@@ -6,8 +6,8 @@ homekit:
   hap_start_port: 51826
 
   # The HomeKit UUID
-  # If you're running multiple instances of texecom-homekit, use a unique UUID for each
-  uuid: themainframe:accessories:texecom-homekit
+  # If you're running multiple instances of hk-texecom, use a unique UUID for each
+  uuid: themainframe:accessories:hk-texecom
 
   # A nice name for the device in HomeKit
   name: Texecom Premier Elite
