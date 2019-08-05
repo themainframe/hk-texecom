@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as net from 'net';
 import { ProtocolInterface } from './protocol';
 import { ConnectionConfig } from '../config-file';
-import { Subject, Subscription } from 'rxjs';
+import { Subject, Subscription, noop } from 'rxjs';
 import { PanelEvent, ZoneStateChangeEvent, AreaStateChangeEvent, AreaState, UserLoginEvent, UserLoginMechanism } from '../panel/panel-events';
 import { PanelCommand } from '../panel/panel-commands';
 
@@ -11,12 +11,17 @@ import { PanelCommand } from '../panel/panel-commands';
  */
 export class CrestronProtocol implements ProtocolInterface {
 
+    // The socket connected to the panel
     private client: net.Socket;
-    
+
+    // Timeout on which to retry connectivity if connection is lost (Wi-Fi dropouts, etc...)
+    private retryConnectionTimeout: NodeJS.Timeout;
+
+    // Stream of commands to execute on the panel
     private commandSubscriber: Subscription;
 
+    // Stream of events reported by the panel
     public panelObservable: Subject<PanelEvent>;
-
 
     constructor (private config: ConnectionConfig) {}
 
@@ -29,13 +34,42 @@ export class CrestronProtocol implements ProtocolInterface {
 
         // Connect to the panel via TCP
         this.client = new net.Socket();
-        this.client.connect({
-            host: this.config.host,
-            port: this.config.port
-        });
+
+        // Subscribe to data events
         this.client.on('data', (data: Buffer) => {
             this.onData(data);
         });
+
+        // Keep the socket alive
+        this.client.setKeepAlive(true, 5000);
+        this.client.setTimeout(5000);
+
+        // Connect the socket
+        const connect = () => {
+            console.debug(`(Re)connecting socket to ${this.config.host}:${this.config.port}...`);
+            this.client.connect({
+                host: this.config.host,
+                port: this.config.port
+            });
+        };
+
+        // On closure, schedule a reconnect
+        this.client.on('close', () => {
+            console.error(`Socket was closed - scheduling reconnect...`);
+            this.retryConnectionTimeout = setTimeout(connect, 5000);
+        });
+
+        // Do nothing on error
+        this.client.on('error', (error) => {
+            console.error(`Socket error: ${error}`);
+        });
+
+        this.client.on('connect', () => {
+            console.debug(`Connected to panel`);
+        });
+
+        // Connect now, and then periodically retry if we become disconnected
+        connect();
 
         // TODO: Observe commandSubject and react to commands issued
         // TODO: This might end up being only used for other protocols (I.e. Connect)
@@ -47,7 +81,14 @@ export class CrestronProtocol implements ProtocolInterface {
      * Disconnect.
      */
     public disconnect() {
+
+        // Unsubscribe from commands
         this.commandSubscriber.unsubscribe();
+
+        // Stop retrying connections
+        clearTimeout(this.retryConnectionTimeout);
+
+        // Disconnect
         this.client.end();
     }
 
