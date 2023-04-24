@@ -371,10 +371,10 @@ wrappy@1:
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
   integrity sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=
 
-yaml@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/yaml/-/yaml-1.0.3.tgz#6eed55f60edb3ac1402283fba94c91b6a0a026f7"
-  integrity sha512-GDYiMkQRa1894pgIQTIK5CGEpcjbozJb0IcSJ3WYoGyA9kZupfpRQxpSYFYfFHFKxlkaN4GgnhEF88J/VelC5A==
+yaml@^2.2.2:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/yaml/-/yaml-2.2.2.tgz#ec551ef37326e6d42872dad1970300f8eb83a073"
+  integrity sha512-CBKFWExMn46Foo4cldiChEzn7S7SRV+wqiluAb6xmueD/fGyRHIhX8m14vVGgeFWjN540nKCNVj6P21eQjgTuA==
 
 yn@^2.0.0:
   version "2.0.0"
